@@ -10,15 +10,15 @@ import (
 
 type IUserService interface {
 	Register(ctx context.Context, req *model.UserRegisterReq) error
-	Login(ctx context.Context, req *model.UserLoginReq) error
-	UpdateProfile(ctx context.Context, req *model.Item) (*model.Item, error)
+	Login(ctx context.Context, req *model.UserLoginReq) (*model.User, error)
+	UpdateProfile(ctx context.Context, id string) (*model.User, error)
 }
 
 type UserService struct {
-	userRepo repository.UserRepository
+	userRepo repository.IUserRepo
 }
 
-func NewUserService(repo repository.UserRepository) *UserService {
+func NewUserService(repo repository.IUserRepo) *UserService {
 	return &UserService{
 		userRepo: repo,
 	}
@@ -34,4 +34,26 @@ func (s *UserService) Register(ctx context.Context, req *model.UserRegisterReq) 
 	}
 
 	return nil
+}
+
+func (s *UserService) Login(ctx context.Context, req *model.UserLoginReq) (*model.User, error) {
+	var user model.User
+
+	utils.Copy(user, req)
+
+	resp, err := s.userRepo.FindUserByEmail(ctx, req.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func (s *UserService) UpdateProfile(ctx context.Context, id string) (*model.User, error) {
+
+	resp, err := s.userRepo.FindUserByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

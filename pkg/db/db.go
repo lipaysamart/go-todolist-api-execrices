@@ -2,8 +2,10 @@ package db
 
 import (
 	"context"
+	"log"
 	"time"
 
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -31,10 +33,19 @@ type Query struct {
 	args  []any
 }
 
-func NewDatabase(db *gorm.DB) *Database {
-	return &Database{
-		DB: db,
+func NewDatabase(uri string) (*Database, error) {
+	database, err := gorm.Open(mysql.Open(uri), &gorm.Config{})
+	if err != nil {
+		log.Fatal("Failed to connect to the database:", err)
 	}
+
+	sqlDB, _ := database.DB()
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetMaxIdleConns(10)
+
+	return &Database{
+		DB: database,
+	}, nil
 }
 
 func (d *Database) Create(ctx context.Context, doc any) error {
