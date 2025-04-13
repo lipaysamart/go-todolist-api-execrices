@@ -12,10 +12,10 @@ func UserRoute(r *gin.RouterGroup, db db.IDatabase) {
 	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
 	userHandle := handle.NewUserHandle(userService)
-	r.Group("/auth")
+	userGroup := r.Group("/auth")
 	{
-		r.POST("/register", userHandle.Register)
-		r.POST("/login", userHandle.Login)
-		r.POST("/profile/:id", userHandle.UpdateProfile)
+		userGroup.POST("/register", userHandle.Register)
+		userGroup.POST("/login", userHandle.Login)
+		userGroup.POST("/profile/:id", userHandle.UpdateProfile)
 	}
 }

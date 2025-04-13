@@ -10,7 +10,7 @@ import (
 
 type ITaskService interface {
 	AddItem(ctx context.Context, req *model.ItemReq) error
-	DelItem(ctx context.Context, req *model.Item) error
+	DelItem(ctx context.Context, req *model.ItemReq) error
 	UpdateItem(ctx context.Context, req *model.ItemReq) (*model.Item, error)
 	GetItem(ctx context.Context, id string) (*model.Item, error)
 	GetItemList(ctx context.Context) ([]model.Item, error)
@@ -38,8 +38,12 @@ func (s *TaskService) AddItem(ctx context.Context, req *model.ItemReq) error {
 	return nil
 }
 
-func (s *TaskService) DelItem(ctx context.Context, req *model.Item) error {
-	if err := s.taskRepo.Delete(ctx, req); err != nil {
+func (s *TaskService) DelItem(ctx context.Context, req *model.ItemReq) error {
+	var item model.Item
+
+	utils.Copy(item, req)
+
+	if err := s.taskRepo.Delete(ctx, &item); err != nil {
 		return err
 	}
 
