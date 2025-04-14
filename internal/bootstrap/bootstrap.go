@@ -1,6 +1,8 @@
 package bootstrap
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/lipaysamart/go-todolist-api-execrices/internal/controller/route"
 	"github.com/lipaysamart/go-todolist-api-execrices/pkg/config"
@@ -32,7 +34,7 @@ func (b *BootStrap) Run() error {
 		return err
 	}
 
-	if err := b.engin.Run(b.cfg.HttpPort); err != nil {
+	if err := b.engin.Run(fmt.Sprintf(":%v", b.cfg.HttpPort)); err != nil {
 		return err
 	}
 
@@ -42,6 +44,6 @@ func (b *BootStrap) Run() error {
 func (b *BootStrap) MapRoutes() error {
 	v1 := b.engin.Group("/api/v1")
 	route.UserRoute(v1, b.database)
-
+	route.TaskRoute(v1, b.database)
 	return nil
 }

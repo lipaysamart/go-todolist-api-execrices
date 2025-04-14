@@ -14,7 +14,7 @@ type Item struct {
 	Description string
 	Status      string
 	Priority    string
-	Tags        []string
+	Tags        []string  `gorm:"serializer:json"`
 	DueDate     time.Time `gorm:"index"`
 	CompletedAt time.Time
 	CreatedAt   time.Time

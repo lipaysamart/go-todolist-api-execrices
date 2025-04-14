@@ -15,19 +15,19 @@ type Schema struct {
 }
 
 var (
-	cfg *Schema
+	cfg Schema
 )
 
 func LoadConfig() *Schema {
 	environment := os.Getenv("ENVIRONMENT")
 	switch environment {
 	case "PRODUCTION":
-		if err := godotenv.Load(".env"); err != nil {
+		if err := godotenv.Load("../.env"); err != nil {
 			log.Fatalf("Error loading.env file: %v", err)
 		}
 
 	default:
-		if err := godotenv.Load(".env.dev"); err != nil {
+		if err := godotenv.Load("../.env.dev"); err != nil {
 			log.Fatalf("Error loading.env file: %v", err)
 		}
 	}
@@ -36,9 +36,9 @@ func LoadConfig() *Schema {
 		log.Fatalf("Error parsing env file: %v", err)
 	}
 
-	return cfg
+	return &cfg
 }
 
 func GetConfig() *Schema {
-	return cfg
+	return &cfg
 }
