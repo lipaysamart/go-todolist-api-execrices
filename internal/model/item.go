@@ -9,17 +9,17 @@ import (
 )
 
 type Item struct {
-	ID          string `gorm:"primaryKey"`
-	Title       string `gorm:"not null"`
-	Description string
-	Status      string
-	Priority    string
+	ID          string    `gorm:"primaryKey" json:"id"`
+	Title       string    `gorm:"not null" json:"title"`
+	Description string    `json:"description"`
+	Status      string    `json:"status"`
+	Priority    string    `json:"priority"`
 	Tags        []string  `gorm:"serializer:json"`
-	DueDate     time.Time `gorm:"index"`
-	CompletedAt time.Time
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   gorm.DeletedAt `gorm:"index"`
+	DueDate     time.Time `gorm:"index" json:"due_date"`
+	// CompletedAt time.Time     `json:"completed_at"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type ItemReq struct {
@@ -37,5 +37,6 @@ func (i *Item) BeforeCreate(tx *gorm.DB) error {
 		return err
 	}
 	i.ID = base64.URLEncoding.EncodeToString(buf)
+
 	return nil
 }

@@ -29,7 +29,7 @@ func NewTaskService(repo repository.ITaskRepo) *TaskService {
 func (s *TaskService) AddItem(ctx context.Context, req *model.ItemReq) error {
 	var item model.Item
 
-	utils.Copy(item, req)
+	utils.Copy(&item, req)
 
 	if err := s.taskRepo.Create(ctx, &item); err != nil {
 		return err
@@ -41,7 +41,7 @@ func (s *TaskService) AddItem(ctx context.Context, req *model.ItemReq) error {
 func (s *TaskService) DelItem(ctx context.Context, req *model.ItemReq) error {
 	var item model.Item
 
-	utils.Copy(item, req)
+	utils.Copy(&item, req)
 
 	if err := s.taskRepo.Delete(ctx, &item); err != nil {
 		return err
@@ -53,7 +53,7 @@ func (s *TaskService) DelItem(ctx context.Context, req *model.ItemReq) error {
 func (s *TaskService) UpdateItem(ctx context.Context, req *model.ItemReq) (*model.Item, error) {
 	var item model.Item
 
-	utils.Copy(item, req)
+	utils.Copy(&item, req)
 
 	updatedItem, err := s.taskRepo.Update(ctx, &item)
 	if err != nil {

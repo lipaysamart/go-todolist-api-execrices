@@ -11,7 +11,7 @@ import (
 type IUserService interface {
 	Register(ctx context.Context, req *model.UserRegisterReq) error
 	Login(ctx context.Context, req *model.UserLoginReq) (*model.User, error)
-	UpdateProfile(ctx context.Context, id string) (*model.User, error)
+	UpdateProfile(ctx context.Context, id string, req *model.UserRegisterReq) (*model.User, error)
 }
 
 type UserService struct {
@@ -27,7 +27,7 @@ func NewUserService(repo repository.IUserRepo) *UserService {
 func (s *UserService) Register(ctx context.Context, req *model.UserRegisterReq) error {
 	var user model.User
 
-	utils.Copy(user, req)
+	utils.Copy(&user, req)
 
 	if err := s.userRepo.Create(ctx, &user); err != nil {
 		return err
@@ -39,7 +39,7 @@ func (s *UserService) Register(ctx context.Context, req *model.UserRegisterReq) 
 func (s *UserService) Login(ctx context.Context, req *model.UserLoginReq) (*model.User, error) {
 	var user model.User
 
-	utils.Copy(user, req)
+	utils.Copy(&user, req)
 
 	resp, err := s.userRepo.FindUserByEmail(ctx, req.Email)
 	if err != nil {
@@ -49,11 +49,18 @@ func (s *UserService) Login(ctx context.Context, req *model.UserLoginReq) (*mode
 	return resp, nil
 }
 
-func (s *UserService) UpdateProfile(ctx context.Context, id string) (*model.User, error) {
-
-	resp, err := s.userRepo.FindUserByID(ctx, id)
+func (s *UserService) UpdateProfile(ctx context.Context, id string, req *model.UserRegisterReq) (*model.User, error) {
+	user, err := s.userRepo.FindUserByID(ctx, id)
 	if err != nil {
 		return nil, err
 	}
+
+	utils.Copy(&user, req)
+
+	resp, err := s.userRepo.Update(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
 	return resp, nil
 }

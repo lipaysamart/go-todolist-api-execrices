@@ -18,5 +18,5 @@ func HashAndSalt(pass []byte) string {
 
 func Copy(dest interface{}, src interface{}) {
 	data, _ := json.Marshal(src)
-	json.Unmarshal(data, dest)
+	_ = json.Unmarshal(data, dest)
 }

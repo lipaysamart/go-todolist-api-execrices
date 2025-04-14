@@ -64,7 +64,7 @@ func (h *UserHandle) Register(ctx *gin.Context) {
 	})
 }
 func (h *UserHandle) UpdateProfile(ctx *gin.Context) {
-	var httpReq model.User
+	var httpReq model.UserRegisterReq
 
 	id := ctx.Param("id")
 	if err := ctx.ShouldBind(&httpReq); err != nil {
@@ -74,7 +74,7 @@ func (h *UserHandle) UpdateProfile(ctx *gin.Context) {
 		})
 		return
 	}
-	user, err := h.userHandle.UpdateProfile(ctx, id)
+	user, err := h.userHandle.UpdateProfile(ctx, id, &httpReq)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to update user...",
