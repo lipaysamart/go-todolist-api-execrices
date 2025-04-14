@@ -10,9 +10,9 @@ import (
 
 type User struct {
 	ID        string `gorm:"primaryKey"`
-	Email     string
+	Email     string `gorm:"not null"`
 	Username  string
-	Password  string
+	Password  string `gorm:"not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
