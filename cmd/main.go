@@ -3,20 +3,20 @@ package main
 import (
 	"log"
 
-	"github.com/lipaysamart/go-todolist-api-execrices/internal/bootstrap"
-	"github.com/lipaysamart/go-todolist-api-execrices/internal/model"
-	"github.com/lipaysamart/go-todolist-api-execrices/pkg/config"
-	"github.com/lipaysamart/go-todolist-api-execrices/pkg/db"
+	"github.com/lipaysamart/go-todolist-api-exerices/internal/bootstrap"
+	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exerices/pkg/config"
+	"github.com/lipaysamart/gocommon/dbs"
 )
 
 func main() {
 	cfg := config.LoadConfig()
 
-	database, err := db.NewDatabase(cfg.DatabaseURI)
+	database, err := dbs.NewMySQL(cfg.DatabaseURI)
 	if err != nil {
 		log.Fatal("Failed serve database:", err)
 	}
-	if err := database.Migrate(&model.User{}, &model.Item{}); err != nil {
+	if err := database.Migrate(&model.Item{}); err != nil {
 		log.Fatal("Failed to migrate the database:", err)
 	}
 

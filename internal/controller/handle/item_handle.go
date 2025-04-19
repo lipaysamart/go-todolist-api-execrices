@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lipaysamart/go-todolist-api-execrices/internal/model"
-	"github.com/lipaysamart/go-todolist-api-execrices/internal/service"
+	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exerices/internal/service"
 )
 
 type TaskHandle struct {
@@ -79,6 +79,7 @@ func (h *TaskHandle) GetItem(ctx *gin.Context) {
 func (h *TaskHandle) UpdateItem(ctx *gin.Context) {
 	var itemReq model.ItemReq
 
+	id := ctx.Param("id")
 	if err := ctx.ShouldBind(&itemReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": "Failed to bind request body",
@@ -87,7 +88,7 @@ func (h *TaskHandle) UpdateItem(ctx *gin.Context) {
 		return
 	}
 
-	resp, err := h.taskHandle.UpdateItem(ctx, &itemReq)
+	resp, err := h.taskHandle.UpdateItem(ctx, id, &itemReq)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to update item",
@@ -103,16 +104,9 @@ func (h *TaskHandle) UpdateItem(ctx *gin.Context) {
 
 }
 func (h *TaskHandle) DeleteItem(ctx *gin.Context) {
-	var itemReq model.ItemReq
-	if err := ctx.ShouldBind(&itemReq); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Failed to bind request body",
-			"error":   err.Error(),
-		})
-		return
-	}
+	id := ctx.Param("id")
 
-	if err := h.taskHandle.DelItem(ctx, &itemReq); err != nil {
+	if err := h.taskHandle.DelItem(ctx, id); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to delete item",
 			"error":   err.Error(),

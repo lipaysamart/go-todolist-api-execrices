@@ -40,3 +40,10 @@ func (i *Item) BeforeCreate(tx *gorm.DB) error {
 
 	return nil
 }
+
+func (i *Item) BeforeUpdate(tx *gorm.DB) error {
+	if i.CreatedAt.IsZero() {
+		i.CreatedAt = time.Now()
+	}
+	return nil
+}
