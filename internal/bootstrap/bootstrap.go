@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/controller/route"
-	"github.com/lipaysamart/go-todolist-api-exerices/pkg/config"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/controller/route"
+	"github.com/lipaysamart/go-todolist-api-exercise/pkg/config"
 	"github.com/lipaysamart/gocommon/dbs"
 )
 

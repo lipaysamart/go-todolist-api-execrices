@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/repository"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/repository"
 	"github.com/lipaysamart/gocommon/utils"
 )
 

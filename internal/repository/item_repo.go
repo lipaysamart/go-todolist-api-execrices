@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/model"
 	"github.com/lipaysamart/gocommon/dbs"
 )
 

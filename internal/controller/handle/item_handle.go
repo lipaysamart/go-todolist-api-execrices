@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/service"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/service"
 )
 
 type TaskHandle struct {

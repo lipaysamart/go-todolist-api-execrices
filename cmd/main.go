@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/bootstrap"
-	"github.com/lipaysamart/go-todolist-api-exerices/internal/model"
-	"github.com/lipaysamart/go-todolist-api-exerices/pkg/config"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/bootstrap"
+	"github.com/lipaysamart/go-todolist-api-exercise/internal/model"
+	"github.com/lipaysamart/go-todolist-api-exercise/pkg/config"
 	"github.com/lipaysamart/gocommon/dbs"
 )
 
